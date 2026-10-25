@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>С Днём Рождения, Ангелина! 🎂</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            background: #ffe4e9;
+            color: #4a2c3d;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Animated Background */
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #ffd1dc 0%, #ffb3c6 25%, #ffc9d9 50%, #ffe4e9 75%, #fff0f3 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 20s ease infinite;
+            z-index: -2;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Floating particles - оптимизировано для мобильных */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 182, 193, 0.5);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        /* Stars animation */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .star {
+            position: absolute;
+            color: #ffb6c1;
+            font-size: 1.2em;
+            animation: twinkle 3s ease-in-out infinite;
+            opacity: 0;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: 0.7; transform: scale(1); }
+        }
+
+        /* Loading Screen */
+        #loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #ffe4e9;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 1s ease;
+        }
+
+        #loading.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loader {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255, 182, 193, 0.3);
+            border-top-color: #ff69b4;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            margin-top: 20px;
+            font-size: 1.1em;
+            color: #d147a3;
+            animation: pulse 2s ease-in-out infinite;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 100%;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        .hero-content {
+            opacity: 0;
+            animation: fadeInUp 1.5s ease forwards;
+            animation-delay: 0.5s;
+            z-index: 10;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2em, 8vw, 5em);
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 20px rgba(255, 105, 180, 0.3);
+            letter-spacing: 1px;
+            color: #d147a3;
+            line-height: 1.3;
+        }
+
+        .name {
+            background: linear-gradient(45deg, #ff1493, #ff69b4, #ffb6c1);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 3s linear infinite;
+        }
+
+        @keyframes shimmer {
+            to { background-position: 200% center; }
+        }
+
+        .subtitle {
+            font-size: clamp(1em, 3vw, 1.8em);
+            font-weight: 300;
+            margin-bottom: 30px;
+            opacity: 0;
+            animation: fadeIn 2s ease forwards;
+            animation-delay: 1s;
+            color: #8b4789;
+            line-height: 1.6;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        .age-badge {
+            display: inline-block;
+            background: rgba(255, 182, 193, 0.4);
+            backdrop-filter: blur(10px);
+            padding: 12px 35px;
+            border-radius: 50px;
+            font-size: clamp(1.2em, 4vw, 1.5em);
+            font-weight: 600;
+            margin: 20px 0;
+            border: 2px solid rgba(255, 105, 180, 0.4);
+            opacity: 0;
+            animation: fadeInScale 1s ease forwards;
+            animation-delay: 1.5s;
+            color: #d147a3;
+            box-shadow: 0 5px 20px rgba(255, 105, 180, 0.3);
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            animation: fadeIn 2s ease forwards, bounce 2s ease-in-out infinite;
+            animation-delay: 2s, 3s;
+            cursor: pointer;
+            font-size: 2em;
+            color: #ff69b4;
+            z-index: 10;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-15px); }
+        }
+
+        /* Wishes Section */
+        .wishes-section {
+            min-height: auto;
+            padding: 60px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .wishes-container {
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8em, 5vw, 3.5em);
+            text-align: center;
+            margin-bottom: 40px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s ease;
+            color: #d147a3;
+            line-height: 1.3;
+        }
+
+        .section-title.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .wishes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .wish-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px 20px;
+            border: 2px solid rgba(255, 182, 193, 0.4);
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease, transform 0.3s ease;
+            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.2);
+        }
+
+        .wish-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .wish-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(255, 105, 180, 0.4);
+        }
+
+        .wish-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+            display: block;
+            text-align: center;
+        }
+
+        .wish-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6em;
+            margin-bottom: 12px;
+            font-weight: 600;
+            color: #d147a3;
+            text-align: center;
+        }
+
+        .wish-text {
+            font-size: 1em;
+            line-height: 1.7;
+            color: #6d4c7d;
+            text-align: center;
+        }
+
+        /* Letter Section */
+        .letter-section {
+            min-height: auto;
+            padding: 60px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .letter-container {
+            max-width: 800px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            color: #4a2c3d;
+            padding: 40px 25px;
+            border-radius: 20px;
+            box-shadow: 0 30px 90px rgba(255, 105, 180, 0.3);
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 1s ease;
+            border: 3px solid rgba(255, 182, 193, 0.5);
+        }
+
+        .letter-container.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .letter-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8em, 5vw, 2.5em);
+            margin-bottom: 25px;
+            color: #d147a3;
+            text-align: center;
+            line-height: 1.3;
+        }
+
+        .letter-content {
+            font-size: clamp(1em, 3vw, 1.2em);
+            line-height: 1.9;
+            text-align: justify;
+            color: #6d4c7d;
+        }
+
+        .letter-content p {
+            margin-bottom: 18px;
+        }
+
+        .signature {
+            text-align: right;
+            font-style: italic;
+            margin-top: 30px;
+            font-size: clamp(1em, 3vw, 1.1em);
+            color: #d147a3;
+            line-height: 1.5;
+        }
+
+        /* Photos Section */
+        .photos-section {
+            min-height: auto;
+            padding: 60px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .photos-container {
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .photos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .photo-frame {
+            position: relative;
+            aspect-ratio: 1;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 3px solid rgba(255, 182, 193, 0.5);
+            overflow: hidden;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.8s ease;
+            cursor: pointer;
+            box-shadow: 0 15px 40px rgba(255, 105, 180, 0.3);
+        }
+
+        .photo-frame.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .photo-frame:hover {
+            transform: scale(1.03);
+            box-shadow: 0 25px 70px rgba(255, 105, 180, 0.5);
+        }
+
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .photo-frame:hover img {
+            transform: scale(1.1);
+        }
+
+        /* Interactive Balloons - оптимизировано для мобильных */
+        .balloons-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        .balloon {
+            position: absolute;
+            width: 60px;
+            height: 75px;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            cursor: pointer;
+            pointer-events: auto;
+            transition: transform 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .balloon:active {
+            transform: scale(1.2);
+        }
+
+        .balloon::after {
+            content: '';
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 25px;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .balloon-1 { background: linear-gradient(135deg, #ffb6c1, #ff69b4); animation: float1 4s ease-in-out infinite; }
+        .balloon-2 { background: linear-gradient(135deg, #ffc0cb, #ff9ec9); animation: float2 5s ease-in-out infinite; }
+        .balloon-3 { background: linear-gradient(135deg, #ff69b4, #ff1493); animation: float3 4.5s ease-in-out infinite; }
+        .balloon-4 { background: linear-gradient(135deg, #ffb6d9, #ff8ec7); animation: float1 5.5s ease-in-out infinite; }
+        .balloon-5 { background: linear-gradient(135deg, #ffd1dc, #ffb3c6); animation: float2 4.2s ease-in-out infinite; }
+
+        @keyframes float1 {
+            0%, 100% { transform: translateY(0) translateX(0); }
+            50% { transform: translateY(-30px) translateX(10px); }
+        }
+
+        @keyframes float2 {
+            0%, 100% { transform: translateY(0) translateX(0); }
+            50% { transform: translateY(-35px) translateX(-10px); }
+        }
+
+        @keyframes float3 {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-40px); }
+        }
+
+        /* Birthday Cake */
+        .cake-section {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 60px 20px;
+        }
+
+        .cake-container {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .cake {
+            font-size: clamp(6em, 20vw, 10em);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            filter: drop-shadow(0 20px 40px rgba(255, 105, 180, 0.4));
+            animation: cakePulse 2s ease-in-out infinite;
+        }
+
+        @keyframes cakePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .cake:active {
+            transform: scale(1.15);
+            animation: none;
+        }
+
+        .cake-text {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.5em, 4vw, 2em);
+            text-align: center;
+            margin-top: 20px;
+            opacity: 0;
+            animation: fadeIn 2s ease forwards;
+            animation-delay: 0.5s;
+            color: #d147a3;
+            line-height: 1.4;
+        }
+
+        .blow-instruction {
+            font-size: clamp(1.1em, 3vw, 1.3em);
+            margin-top: 15px;
+            opacity: 0;
+            animation: fadeIn 2s ease forwards, pulse 2s ease-in-out infinite;
+            animation-delay: 1s, 2s;
+            color: #ff69b4;
+            text-align: center;
+        }
+
+        /* Confetti & Effects */
+        .confetti, .firework, .music-note, .heart {
+            position: fixed;
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Responsive - Мобильные устройства */
+        @media (max-width: 768px) {
+            .wishes-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .photos-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+
+            .balloon {
+                width: 45px;
+                height: 60px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            .section-title {
+                font-size: 1.8em;
+            }
+
+            .wish-card {
+                padding: 25px 18px;
+            }
+
+            .letter-container {
+                padding: 30px 20px;
+            }
+        }
+
+        /* Hidden class */
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading">
+        <div class="loader"></div>
+        <div class="loading-text">Готовим сюрприз для Ангелины... 💕</div>
+    </div>
+
+    <!-- Background -->
+    <div class="background"></div>
+    <div class="particles" id="particles"></div>
+    <div class="stars" id="stars"></div>
+
+    <!-- Balloons -->
+    <div class="balloons-container" id="balloons"></div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>С Днём Рождения,<br><span class="name">Ангелина</span>!</h1>
+                <div class="age-badge">✨ 25 лет ✨</div>
+                <p class="subtitle">Самый особенный день для самой особенной девушки</p>
+            </div>
+            <div class="scroll-indicator">💕</div>
+        </section>
+
+        <!-- Cake Section -->
+        <section class="cake-section" id="cakeSection">
+            <div class="cake-container">
+                <div class="cake" id="cake" onclick="blowCandles()">🎂</div>
+            </div>
+            <p class="cake-text">Загадай желание и задуй свечи!</p>
+            <p class="blow-instruction">Нажми на торт 🎂</p>
+        </section>
+
+        <!-- Wishes Section -->
+        <section class="wishes-section">
+            <div class="wishes-container">
+                <h2 class="section-title" id="wishesTitle">Мои пожелания тебе</h2>
+                <div class="wishes-grid">
+                    <div class="wish-card">
+                        <span class="wish-icon">💖</span>
+                        <h3 class="wish-title">Любви</h3>
+                        <p class="wish-text">Пусть твоя жизнь будет наполнена искренней любовью, теплом и нежностью. Пусть каждый день дарит тебе радость и улыбки от близких людей.</p>
+                    </div>
+                    <div class="wish-card">
+                        <span class="wish-icon">✨</span>
+                        <h3 class="wish-title">Счастья</h3>
+                        <p class="wish-text">Желаю тебе бесконечного счастья, которое наполнит каждое мгновение твоей жизни яркими красками и незабываемыми впечатлениями.</p>
+                    </div>
+                    <div class="wish-card">
+                        <span class="wish-icon">🌟</span>
+                        <h3 class="wish-title">Успеха</h3>
+                        <p class="wish-text">Пусть все твои мечты сбываются, а цели достигаются легко и с радостью. Ты заслуживаешь всего самого лучшего!</p>
+                    </div>
+                    <div class="wish-card">
+                        <span class="wish-icon">🌸</span>
+                        <h3 class="wish-title">Красоты</h3>
+                        <p class="wish-text">Оставайся всегда такой же ослепительной и прекрасной! Пусть твоя внутренняя красота всегда отражается в твоих глазах и улыбке.</p>
+                    </div>
+                    <div class="wish-card">
+                        <span class="wish-icon">🦋</span>
+                        <h3 class="wish-title">Легкости</h3>
+                        <p class="wish-text">Пусть жизнь дарит тебе лёгкость, вдохновение и возможность наслаждаться каждым моментом без забот и переживаний.</p>
+                    </div>
+                    <div class="wish-card">
+                        <span class="wish-icon">🌈</span>
+                        <h3 class="wish-title">Ярких эмоций</h3>
+                        <p class="wish-text">Пусть каждый день дарит тебе новые впечатления, путешествия, встречи и моменты, которые запомнятся навсегда!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Letter Section -->
+        <section class="letter-section">
+            <div class="letter-container" id="letter">
+                <h2 class="letter-title">Дорогая Ангелина!</h2>
+                <div class="letter-content">
+                    <p>Сегодня твой особенный день — день, когда мир стал ярче и прекраснее благодаря твоему появлению. 25 лет — это удивительный возраст, полный возможностей, надежд и новых открытий.</p>
+                    
+                    <p>Ты — как ангел, чьё имя ты носишь, — озаряешь жизнь окружающих своей добротой, теплом и светом. Твоя улыбка способна изменить настроение любого дня, а твоя искренность и открытость делают этот мир лучше.</p>
+                    
+                    <p>Желаю тебе в этом новом году жизни обрести всё, о чём мечтаешь. Пусть каждый день приносит радость, каждая встреча будет особенной, а каждое событие — счастливым. Верь в себя, следуй за своими мечтами и никогда не переставай сиять!</p>
+                    
+                    <p>Пусть твои 25 лет станут началом самого прекрасного периода в твоей жизни, наполненного любовью, успехом и волшебными моментами. Ты заслуживаешь всего самого лучшего в этом мире!</p>
+                    
+                    <p>С любовью и наилучшими пожеланиями в твой день рождения! 💝</p>
+                </div>
+                <div class="signature">С теплом и заботой, твой Максим!<br>25 октября 2026</div>
+            </div>
+        </section>
+
+        <!-- Photos Section -->
+        <section class="photos-section">
+            <div class="photos-container">
+                <h2 class="section-title" id="photosTitle">Наши моменты 💕</h2>
+                <div class="photos-grid" id="photosGrid">
+                    <!-- Фото будут добавлены через JavaScript -->
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Определяем мобильное устройство
+        const isMobile = window.innerWidth <= 768;
+        
+        // Массив с фотографиями
+        const photos = [
+            'photos/photo_2026-10-25_23-39-34.jpg',
+            'photos/photo_2026-10-25_23-42-17.jpg',
+            'photos/photo_2026-10-25_23-42-37.jpg',
+            'photos/photo_2026-10-25_23-42-58.jpg',
+            'photos/photo_2026-10-25_23-48-27.jpg',
+            'photos/photo_2026-10-25_23-51-01.jpg'
+        ];
+
+        // Loading screen
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loading').classList.add('hidden');
+                createConfetti();
+            }, 2000);
+        });
+
+        // Create balloons - меньше для мобильных
+        function createBalloons() {
+            const balloonsContainer = document.getElementById('balloons');
+            const balloonCount = isMobile ? 5 : 10;
+            const positions = isMobile ? [
+                { left: '10%', top: '15%' },
+                { left: '85%', top: '20%' },
+                { left: '15%', top: '70%' },
+                { left: '80%', top: '60%' },
+                { left: '50%', top: '85%' }
+            ] : [
+                { left: '5%', top: '15%' },
+                { left: '12%', top: '55%' },
+                { left: '88%', top: '12%' },
+                { left: '95%', top: '65%' },
+                { left: '8%', top: '82%' },
+                { left: '82%', top: '38%' },
+                { left: '50%', top: '8%' },
+                { left: '70%', top: '75%' },
+                { left: '25%', top: '35%' },
+                { left: '65%', top: '90%' }
+            ];
+
+            positions.forEach((pos, index) => {
+                const balloon = document.createElement('div');
+                balloon.className = `balloon balloon-${(index % 5) + 1}`;
+                balloon.style.left = pos.left;
+                balloon.style.top = pos.top;
+                balloon.onclick = () => releaseBalloon(balloon);
+                balloonsContainer.appendChild(balloon);
+            });
+        }
+
+        createBalloons();
+
+        // Release balloon
+        function releaseBalloon(balloon) {
+            balloon.style.transition = 'all 3s ease-out';
+            balloon.style.transform = 'translateY(-2000px) scale(0.2)';
+            balloon.style.opacity = '0';
+            
+            createFirework();
+            createHearts();
+            
+            setTimeout(() => {
+                balloon.style.transition = 'none';
+                balloon.style.transform = 'translateY(0) scale(1)';
+                balloon.style.opacity = '1';
+                setTimeout(() => {
+                    balloon.style.transition = 'transform 0.3s ease';
+                }, 50);
+            }, 3000);
+        }
+
+        // Floating particles - меньше для мобильных
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = isMobile ? 30 : 80;
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                const size = Math.random() * 5 + 2;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animation = `float ${Math.random() * 10 + 10}s linear infinite`;
+                particle.style.animationDelay = Math.random() * 5 + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Floating animation
+        const style = document.createElement('style');
+        style.textContent = `@keyframes float { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(${Math.random() * 50 - 25}px, ${Math.random() * 50 - 25}px); } }`;
+        document.head.appendChild(style);
+
+        createParticles();
+
+        // Create stars - меньше для мобильных
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const starCount = isMobile ? 15 : 30;
+            const starEmojis = ['✨', '⭐', '🌟'];
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.textContent = starEmojis[Math.floor(Math.random() * starEmojis.length)];
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+
+        createStars();
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all animatable elements
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.wish-card, .section-title, .letter-container, .photo-frame').forEach(el => {
+                observer.observe(el);
+            });
+        });
+
+        // Load photos
+        function loadPhotos() {
+            const photosGrid = document.getElementById('photosGrid');
+            
+            photos.forEach((photoSrc, index) => {
+                const frame = document.createElement('div');
+                frame.className = 'photo-frame';
+                frame.style.animationDelay = (index * 0.1) + 's';
+                const img = document.createElement('img');
+                img.src = photoSrc;
+                img.alt = 'Памятное фото';
+                img.onerror = () => {
+                    frame.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:3em;">💕</div>';
+                };
+                frame.appendChild(img);
+                frame.onclick = () => {
+                    createHearts();
+                    createFirework();
+                };
+                photosGrid.appendChild(frame);
+                observer.observe(frame);
+            });
+        }
+
+        loadPhotos();
+
+        // Blow candles
+        let candlesBlown = false;
+        function blowCandles() {
+            if (candlesBlown) return;
+            candlesBlown = true;
+            
+            const cake = document.getElementById('cake');
+            cake.innerHTML = '🎉';
+            
+            const fireworkCount = isMobile ? 20 : 40;
+            for (let i = 0; i < fireworkCount; i++) {
+                setTimeout(() => createFirework(), i * 100);
+            }
+            
+            const heartCount = isMobile ? 10 : 20;
+            for (let i = 0; i < heartCount; i++) {
+                setTimeout(() => createHearts(), i * 150);
+            }
+            
+            setTimeout(() => {
+                alert('🎊 Пусть сбудется твоё желание! 🎊');
+            }, 1000);
+        }
+
+        // Create confetti - меньше для мобильных
+        function createConfetti() {
+            const colors = ['#ff69b4', '#ffb6c1', '#ff1493', '#ffc0cb'];
+            const confettiCount = isMobile ? 40 : 100;
+            for (let i = 0; i < confettiCount; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.top = '-20px';
+                    confetti.style.width = '10px';
+                    confetti.style.height = '10px';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.borderRadius = '50%';
+                    confetti.style.animation = `fall ${Math.random() * 3 + 3}s linear`;
+                    document.body.appendChild(confetti);
+                    setTimeout(() => confetti.remove(), 6000);
+                }, i * 40);
+            }
+        }
+
+        // Create firework
+        function createFirework() {
+            const firework = document.createElement('div');
+            firework.className = 'firework';
+            firework.style.left = Math.random() * window.innerWidth + 'px';
+            firework.style.top = Math.random() * window.innerHeight * 0.6 + 'px';
+            
+            const colors = ['#ff69b4', '#ffb6c1', '#ff1493'];
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            
+            const particleCount = isMobile ? 12 : 16;
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.style.cssText = `
+                    position: absolute;
+                    width: 6px;
+                    height: 6px;
+                    background: ${color};
+                    border-radius: 50%;
+                    animation: explode 1.5s ease-out forwards;
+                `;
+                const angle = (i * (360 / particleCount)) * Math.PI / 180;
+                particle.style.setProperty('--x', Math.cos(angle) * 100 + 'px');
+                particle.style.setProperty('--y', Math.sin(angle) * 100 + 'px');
+                firework.appendChild(particle);
+            }
+            
+            document.body.appendChild(firework);
+            setTimeout(() => firework.remove(), 1500);
+        }
+
+        // Explode animation
+        const explodeStyle = document.createElement('style');
+        explodeStyle.textContent = `@keyframes explode { to { transform: translate(var(--x), var(--y)); opacity: 0; } }`;
+        document.head.appendChild(explodeStyle);
+
+        // Create hearts
+        function createHearts() {
+            const heartEmojis = ['💕', '💖', '💗'];
+            const heartCount = isMobile ? 4 : 6;
+            for (let i = 0; i < heartCount; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.className = 'heart';
+                    heart.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+                    heart.style.left = Math.random() * window.innerWidth + 'px';
+                    heart.style.bottom = '-50px';
+                    heart.style.fontSize = '2em';
+                    heart.style.animation = 'floatUp 5s ease-out';
+                    document.body.appendChild(heart);
+                    setTimeout(() => heart.remove(), 5000);
+                }, i * 100);
+            }
+        }
+
+        const floatUpStyle = document.createElement('style');
+        floatUpStyle.textContent = `@keyframes floatUp { 0% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(-300px); } }`;
+        document.head.appendChild(floatUpStyle);
+
+        // Easter egg: Click on name
+        document.querySelector('.name').addEventListener('click', () => {
+            for (let i = 0; i < (isMobile ? 8 : 15); i++) {
+                setTimeout(() => createFirework(), i * 100);
+            }
+            createHearts();
+        });
+
+        // Smooth scroll
+        document.querySelector('.scroll-indicator').addEventListener('click', () => {
+            document.getElementById('cakeSection').scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
